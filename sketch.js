@@ -6,30 +6,25 @@ let fps = 5;
 var plSh;
 var bul = [];
 var count = 0;
-function setup() {
 
+function setup() {
   createCanvas(500,1000);
   background('#497019');
   plSh = new ship();
 }
 
 function draw() {
-  
+  background('#497019');
   fill(10);
   strokeWeight(4);
   stroke(100);
-  
-  
   recX = width/sclX;
   recY = height/sclY;
-  background('#497019');
-  rect(posX,posY,recX,recY);
-  // frameRate(fps);
+  frameRate(fps);
   plSh.drawShip();
-  
-  
-
-
+  for(let i=0;i<count;i++){
+    bul[i].shoot(plSh.x,plSh.y,plSh.dir);
+  }
 }
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
@@ -48,7 +43,7 @@ function keyPressed() {
     bul.push(new bullet());
     count++;
   //  bul[count-1].i =0;
-    bul[count-1].shoot(plSh.x,plSh.y,plSh.dir);
+    
     
     
   } else if(keyCode === UP_ARROW){
@@ -142,13 +137,16 @@ function bullet (){
         this.y = shipY - recY;
       }
       this.i++;
-      
-      fill(0);
       console.log("pow pra cima!\n");
-      
+      //draw bullet
+      fill(0);
       rect(this.x , this.y,width/sclX,height/sclY);
       
       this.y -= recY ;
+      
+      console.log("buly = "+ this.y);
+
+
     } else if(dir == 3){
       if(this.i == 0){
         this.x = shipX ;
