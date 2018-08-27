@@ -2,32 +2,38 @@ let sclX = 10;
 let sclY = 20;
 let recX,recY;
 let posX = 0, posY = 600;
-let fps = 5;
+let fps = 25;
 var plSh;
 var bul = [];
 var count = 0;
-var frmCount = 0;
+var stval = 10;
+var stamina = stval;
+
 
 function setup() {
+  frameRate(fps);
   createCanvas(500,1000);
   background('#497019');
   plSh = new ship();
 }
 
 function draw() {
-  frmCount++;
+  if (stamina < stval ) {
+    stamina++;
+  }
+    
   
   background('#497019');
   fill(10);
   strokeWeight(4);
   stroke(100);
   recX = width/sclX;
+  console.log(stamina);
 
 
 
 
   recY = height/sclY;
-  frameRate(fps);
   plSh.drawShip();
 
   for(let i=0;i<count;i++){
@@ -39,7 +45,8 @@ function draw() {
   for(let i=0;i<bul.length;i++){
     if(bul[i].y < -recY || bul[i].y > height || bul[i].x < -recX || bul[i].x > width){
       
-        bul.splice(i);
+        bul.splice(i,1);
+        break;
       
     }
 
@@ -65,11 +72,13 @@ function keyPressed() {
       plSh.x += recX;
     }
   } else if(keyCode === ENTER){
-    if (frmCount%4 == 0) {
-      bul.push(new bullet(plSh.dir));
-      count++;
-    }
-  //  bul[count-1].i =0;
+      if(stamina == stval ){
+        bul.push(new bullet(plSh.dir));
+        count++;
+        stamina = 0;
+      }
+    
+
     
     
     
@@ -207,6 +216,7 @@ function bullet (dir){
       fill(0);
       rect(this.x , this.y,width/sclX,height/sclY);
       this.x += recX;
+
     }
   };
 }
