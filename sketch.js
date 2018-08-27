@@ -6,6 +6,7 @@ let fps = 5;
 var plSh;
 var bul = [];
 var count = 0;
+var frmCount = 0;
 
 function setup() {
   createCanvas(500,1000);
@@ -14,17 +15,41 @@ function setup() {
 }
 
 function draw() {
+  frmCount++;
+  
   background('#497019');
   fill(10);
   strokeWeight(4);
   stroke(100);
   recX = width/sclX;
+
+
+
+
   recY = height/sclY;
   frameRate(fps);
   plSh.drawShip();
+
   for(let i=0;i<count;i++){
-    bul[i].shoot(plSh.x,plSh.y,plSh.dir);
+    if(bul[i] != undefined){
+      bul[i].shoot(plSh.x,plSh.y);
+    }
   }
+
+  for(let i=0;i<bul.length;i++){
+    if(bul[i].y < -recY || bul[i].y > height || bul[i].x < -recX || bul[i].x > width){
+      
+        bul.splice(i);
+      
+    }
+
+
+  }
+  
+
+
+  
+
 }
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
@@ -40,8 +65,10 @@ function keyPressed() {
       plSh.x += recX;
     }
   } else if(keyCode === ENTER){
-    bul.push(new bullet());
-    count++;
+    if (frmCount%4 == 0) {
+      bul.push(new bullet(plSh.dir));
+      count++;
+    }
   //  bul[count-1].i =0;
     
     
@@ -125,12 +152,12 @@ function ship(){
     // console.log(this.x + ", " + this.y);
   };
 }
-function bullet (){
+function bullet (dir){
   this.x;
   this.y;
   this.i = 0;
-  this.shoot = function(shipX,shipY,dir){
-    
+
+  this.shoot = function(shipX,shipY){
     if(dir == 1){
       if(this.i == 0){
         this.x = shipX ;
@@ -144,7 +171,7 @@ function bullet (){
       
       this.y -= recY ;
       
-      console.log("buly = "+ this.y);
+      
 
 
     } else if(dir == 3){
@@ -180,7 +207,6 @@ function bullet (){
       fill(0);
       rect(this.x , this.y,width/sclX,height/sclY);
       this.x += recX;
-
     }
   };
 }
