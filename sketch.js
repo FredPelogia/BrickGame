@@ -46,7 +46,6 @@ function draw() {
     if(bul[i].y < -recY || bul[i].y > height || bul[i].x < -recX || bul[i].x > width){
       
         bul.splice(i,1);
-        break;
       
     }
 
@@ -110,8 +109,6 @@ function ship(){
           3 
 
   */
-  // this.x = constrain(this.x,this.recX,width-recX);
-  // this.y = constrain(this.y,this.recX,height - recY);
   this.drawShip = function(){
 
     if(this.dir == 1){
