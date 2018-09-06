@@ -15,6 +15,7 @@ function setup() {
   createCanvas(500,1000);
   background('#497019');
   plSh = new ship();
+  
 }
 
 function draw() {
@@ -34,7 +35,7 @@ function draw() {
 
 
   recY = height/sclY;
-  plSh.drawShip();
+  plSh.drawShip(0);
 
   for(let i=0;i<count;i++){
     if(bul[i] != undefined){
@@ -109,54 +110,110 @@ function ship(){
           3 
 
   */
-  this.drawShip = function(){
+  this.drawShip = function(owner){
+    if(owner == 1){
+      //NAVE DO JOGADORfill(255);
+      if(this.dir == 1){
+        //camada 2
+        rect(this.x,this.y,this.recX,this.recY);
+        rect(this.x - recX,this.y,this.recX,this.recY);
+        rect(this.x + recX,this.y,this.recX,this.recY);
+        //camada 1
+        rect(this.x - recX,this.y + recY,this.recX,this.recY);
+        rect(this.x + recX,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y + recY,this.recX,this.recY);
+        //head
+        rect(this.x,this.y - recY,this.recX,this.recY);
+      } else if(this.dir == 3){
+        //camada 2
+        // fill('red');
+        rect(this.x,this.y - recY,this.recX,this.recY);
+        rect(this.x - recX,this.y - recY,this.recX,this.recY);
+        rect(this.x + recX,this.y - recY,this.recX,this.recY);
+        //camada 1
+        // fill('blue')
+        rect(this.x - recX,this.y,this.recX,this.recY);
+        rect(this.x + recX,this.y,this.recX,this.recY);
+        rect(this.x,this.y,this.recX,this.recY);
+        // fill(255);
+        //head
+        rect(this.x,this.y + recY,this.recX,this.recY);
+      } else if(this.dir == 2){
+        rect(this.x,this.y,this.recX,this.recY);
+        rect(this.x - recX,this.y,this.recX,this.recY);
+        rect(this.x - recX,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y - recY,this.recX,this.recY);
+        rect(this.x - recX,this.y - recY,this.recX,this.recY);
+        //head
+        rect(this.x + recX,this.y,this.recX,this.recY);
+      } else  {
+        rect(this.x,this.y,this.recX,this.recY);
+        rect(this.x + recX,this.y,this.recX,this.recY);
+        rect(this.x + recX,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y - recY,this.recX,this.recY);
+        rect(this.x + recX,this.y - recY,this.recX,this.recY);
+        //head
+        rect(this.x - recX,this.y,this.recX,this.recY);
+      }
+    }else{
+      //NAVES DO COMPUTADOR
+      
+      if(this.dir == 1){
+       
+        
+        //camada 1
+        rect(this.x - recX,this.y + recY,this.recX,this.recY);
+        rect(this.x + recX,this.y + recY,this.recX,this.recY);
+        
+        //camada 2
+        rect(this.x,this.y,this.recX,this.recY);
+        rect(this.x - recX,this.y,this.recX,this.recY);
+        rect(this.x + recX,this.y,this.recX,this.recY);
+        //head
+        rect(this.x,this.y - recY,this.recX,this.recY);
+      } else if(this.dir == 3){
+        //camada 2
+        // fill('red');
+        rect(this.x - recX,this.y - recY,this.recX,this.recY);
+        rect(this.x + recX,this.y - recY,this.recX,this.recY);
+        //camada 1
+        // fill('blue')
+        rect(this.x - recX,this.y,this.recX,this.recY);
+        rect(this.x + recX,this.y,this.recX,this.recY);
+        rect(this.x,this.y,this.recX,this.recY);
+        // fill(255);
+        //head
+        rect(this.x,this.y + recY,this.recX,this.recY);
+      } else if(this.dir == 2){
+        rect(this.x,this.y,this.recX,this.recY);
+       
+        
+        rect(this.x - recX,this.y + recY,this.recX,this.recY);
+        
+        rect(this.x,this.y + recY,this.recX,this.recY);
+        
+        rect(this.x,this.y - recY,this.recX,this.recY);
+        
+        rect(this.x - recX,this.y - recY,this.recX,this.recY);
+        //head
+        rect(this.x + recX,this.y,this.recX,this.recY);
+      } else  {
+        rect(this.x,this.y,this.recX,this.recY);
+        
+        rect(this.x + recX,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y + recY,this.recX,this.recY);
+        rect(this.x,this.y - recY,this.recX,this.recY);
+        rect(this.x + recX,this.y - recY,this.recX,this.recY);
+        //head
+        rect(this.x - recX,this.y,this.recX,this.recY);
+      }
 
-    if(this.dir == 1){
-      //camada 2
-      rect(this.x,this.y,this.recX,this.recY);
-      rect(this.x - recX,this.y,this.recX,this.recY);
-      rect(this.x + recX,this.y,this.recX,this.recY);
-      //camada 1
-      rect(this.x - recX,this.y + recY,this.recX,this.recY);
-      rect(this.x + recX,this.y + recY,this.recX,this.recY);
-      rect(this.x,this.y + recY,this.recX,this.recY);
-      //head
-      rect(this.x,this.y - recY,this.recX,this.recY);
-    } else if(this.dir == 3){
-      //camada 2
-      // fill('red');
-      rect(this.x,this.y - recY,this.recX,this.recY);
-      rect(this.x - recX,this.y - recY,this.recX,this.recY);
-      rect(this.x + recX,this.y - recY,this.recX,this.recY);
-      //camada 1
-      // fill('blue')
-      rect(this.x - recX,this.y,this.recX,this.recY);
-      rect(this.x + recX,this.y,this.recX,this.recY);
-      rect(this.x,this.y,this.recX,this.recY);
-      // fill(255);
-      //head
-      rect(this.x,this.y + recY,this.recX,this.recY);
-    } else if(this.dir == 2){
-      rect(this.x,this.y,this.recX,this.recY);
-      rect(this.x - recX,this.y,this.recX,this.recY);
-      rect(this.x - recX,this.y + recY,this.recX,this.recY);
-      rect(this.x,this.y + recY,this.recX,this.recY);
-      rect(this.x,this.y - recY,this.recX,this.recY);
-      rect(this.x - recX,this.y - recY,this.recX,this.recY);
-      //head
-      rect(this.x + recX,this.y,this.recX,this.recY);
-    } else  {
-      rect(this.x,this.y,this.recX,this.recY);
-      rect(this.x + recX,this.y,this.recX,this.recY);
-      rect(this.x + recX,this.y + recY,this.recX,this.recY);
-      rect(this.x,this.y + recY,this.recX,this.recY);
-      rect(this.x,this.y - recY,this.recX,this.recY);
-      rect(this.x + recX,this.y - recY,this.recX,this.recY);
-      //head
-      rect(this.x - recX,this.y,this.recX,this.recY);
     }
     // console.log(this.x + ", " + this.y);
   };
+
 }
 function bullet (dir){
   this.x;
