@@ -6,15 +6,17 @@ let fps = 25;
 var plSh;
 var bul = [];
 var count = 0;
-var stval = 10;
+var stval = 5;
 var stamina = stval;
+var aiship = [];
 
 
 function setup() {
   frameRate(fps);
   createCanvas(500,1000);
   background('#497019');
-  plSh = new ship();
+  plSh = new ship(1);
+  aiship = new ship(0);
   
 }
 
@@ -35,7 +37,10 @@ function draw() {
 
 
   recY = height/sclY;
-  plSh.drawShip(0);
+  plSh.drawShip(1);
+
+  aiship.drawShip(0);
+  aiship.AImove();
 
   for(let i=0;i<count;i++){
     if(bul[i] != undefined){
@@ -49,68 +54,85 @@ function draw() {
         bul.splice(i,1);
       
     }
-
-
   }
-  
 
-
-  
-
-}
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    if(plSh.dir != 0){
-      plSh.dir = 0;
-    }else{
-      plSh.x -= recX;
-    }
-  } else if (keyCode === RIGHT_ARROW) {
-    if(plSh.dir != 2){
-      plSh.dir = 2;
-    }else{
-      plSh.x += recX;
-    }
-  } else if(keyCode === ENTER){
-      if(stamina == stval ){
-        bul.push(new bullet(plSh.dir));
-        count++;
-        stamina = 0;
+    
+      if (keyIsDown(LEFT_ARROW)) {
+        if(plSh.dir != 0){
+          plSh.dir = 0;
+        }else{
+          if(plSh.x >= 2*recX)
+            plSh.x -= recX;
+        }
+      }else if(keyIsDown(RIGHT_ARROW)){
+        if(plSh.dir != 2){
+          plSh.dir = 2;
+        }else{
+          if(plSh.x < width -  2*recX)
+            plSh.x += recX;
+        }
+      } else if(keyIsDown(ENTER)){
+          if(stamina == stval ){
+            bul.push(new bullet(plSh.dir));
+            count++;
+            stamina = 0;
+          }
+        
+      } else if(keyIsDown(UP_ARROW)){
+        if(plSh.dir != 1){
+          plSh.dir = 1;
+        }else{
+          if(plSh.y >= 2*recY)
+            plSh.y -=  recY;
+        }
+      } else if(keyIsDown(DOWN_ARROW)){
+        
+        if(plSh.dir != 3){
+          plSh.dir = 3;
+        }else{
+          if(plSh.y < height-2*recY)
+            plSh.y += recY;
+        }
+    
       }
     
 
-    
-    
-    
-  } else if(keyCode === UP_ARROW){
-    if(plSh.dir != 1){
-      plSh.dir = 1;
-    }else{
-      plSh.y -= recY;
-    }
-  } else if(keyCode === DOWN_ARROW){
-    
-    if(plSh.dir != 3){
-      plSh.dir = 3;
-    }else{
-      plSh.y += recY;
-    }
 
-  };
 }
+  
 
-function ship(){
+
+  
+
+
+
+
+
+
+
+function ship(owner){
   this.recX = width/sclX;
   this.recY = height/sclY;
   this.x = 4*this.recX;
   this.y = height/2 - this.recY; 
-  this.dir = 3;
+  this.dir = 1;
   /*      1
         0   2
           3 
-
   */
-  this.drawShip = function(owner){
+ if (owner == 0) {
+  this.x = random(this.recX,width - 2*this.recX);
+  console.log(this.x);
+  this.y = random(this.recY,width - 2*this.recY);
+ }
+  this.AImove = function(){
+   
+    
+
+
+
+  };
+  this.drawShip = function(){
     if(owner == 1){
       //NAVE DO JOGADORfill(255);
       if(this.dir == 1){
